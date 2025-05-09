@@ -1,0 +1,20 @@
+version: "3.8"
+
+services:
+  redis:
+    image: redis:alpine
+    container_name: atm_redis
+    ports:
+      - "6379:6379"
+
+  atm_app:
+    build: .
+    container_name: atm_app
+    depends_on:
+      - redis
+    environment:
+      - DISPLAY=:0
+    volumes:
+      - .:/app
+    stdin_open: true
+    tty: true
